@@ -1,73 +1,52 @@
-# React + TypeScript + Vite
+# FocusTime: Task Management System
+Note: This is backend side... the frontend side is another repository **frontendfocustime** 
+A full-stack Task Management system with authentication, task scheduling, notifications, and AWS S3 storage.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Features
 
-Currently, two official plugins are available:
+1. **Task Management for Individual Users**
+   - Create, update, delete, and view tasks.
+   - Pagination and search support for tasks.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. **Database Operations**
+   - Built using `Sequelize` ORM with SQL Server.
+   - Performed migrations for schema updates.
+   - Used raw SQL queries for optimized operations.
 
-## React Compiler
+3. **Authentication**
+   - Implemented using `JWT (JSON Web Token)`.
+   - Token is validated with every request to the server.
+   - Tokens are blacklisted when expired or on logout.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+4. **API Endpoints**
+   - `POST /users/register` → Create a new user.
+   - `POST /users/login` → Login and receive JWT.
+   - `POST /users/logout` → Logout and blacklist JWT.
+   - `POST /tasks` → Create a task (with image support).
+   - `GET /tasks` → Get all tasks (with pagination & search).
+   - Middleware for authentication included.
+   - **Middleware for Error Logging**
+   - **Error logging save in AWS S3 BUCKET**
+  
+5. **File Storage**
+   - Task images are uploaded to **AWS S3**.
+   - Images can be retrieved and displayed in the frontend.
 
-## Expanding the ESLint configuration
+6. **Task Notifications**
+   - Scheduled reminders **one day prior** to the task deadline using `node-schedule`.
+   - Notifications sent in real-time via `Socket.IO`.
+   - The read notification status change in Db.only unread notificaion is send
+   - The notifications saved in Db when Task created.
+   - when server  shutdown the unread notification will sent to the users/clients
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+7. **Frontend Integration**
+   - Real-time notifications received by the frontend app via WebSockets.
+   - Tasks and notifications displayed with dynamic updates.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+5. **Admin and Error Logs**
+   - Admin Can see the error Logs from the frontend 
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Improvements (In Progress)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- UI/UX improvements in the dashboard.
