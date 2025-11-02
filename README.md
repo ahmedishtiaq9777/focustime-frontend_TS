@@ -50,3 +50,8 @@ A full-stack Task Management system with authentication, task scheduling, notifi
 ## Improvements (In Progress)
 
 - UI/UX improvements in the dashboard.
+
+<img width="1891" height="907" alt="dashboardupdated" src="https://github.com/user-attachments/assets/003dbcc4-23aa-4a97-b05e-fd1a17502377" />
+
+<img width="1884" height="906" alt="mytasks2" src="https://github.com/user-attachments/assets/d48ab017-5e81-4671-88fe-20a9109be659" />
+<img width="821" height="757" alt="addedittask" src="https://github.com/user-attachments/assets/4242202e-5318-449e-9e1b-4e04114e10a9" />
