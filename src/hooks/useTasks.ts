@@ -8,6 +8,7 @@ import {
 } from "../api/taskApi";
 import type {
   DashboardDataResponse,
+  PaginatedTasksResponse,
   TaskAttributes as Task,
 } from "focustime_types";
 import axios from "axios";
@@ -16,18 +17,32 @@ import type { TaskInput } from "../types";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [cpage, setpage] = useState<number>(1);
+  const [nPages, settotalPages] = useState<number>(1);
+  const [pagArr, setpageArr] = useState<number[]>();
+ 
   const [dashboardData, setDashboardData] =
     useState<DashboardDataResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { logout } = useAuth();
-  const loadTasks = async (page = 1, limit = 10) => {
+  const loadTasks = async (page = 1, limit = 5) => {
     try {
       setLoading(true);
       console.log("loadTASKS");
-      const { tasks } = await fetchTasks(page, limit);
-      console.log("tasksinload tasks:", tasks);
-      setTasks(tasks);
+      console.log('page:',page);
+      console.log("limit:",limit);
+      const paginatedresponse = await fetchTasks(page, limit);
+      console.log('log:',paginatedresponse);
+      
+      console.log("total pages:", paginatedresponse.totalPages);
+      console.log("current pages:",paginatedresponse.currentPage);
+      setTasks(paginatedresponse.tasks);
+      setpage(paginatedresponse.currentPage);
+      settotalPages(paginatedresponse.totalPages);
+       const arr = Array.from({ length: paginatedresponse.totalPages }, (_, i) => i + 1);
+      setpageArr(arr);
+     
     } catch (err) {
       if (axios.isAxiosError(err)) {
         if (err.response?.status == 403 || err?.response?.status == 401) {
@@ -100,5 +115,8 @@ export const useTasks = () => {
     editTask,
     removeTask,
     loadDashboardData,
+    cpage,
+    nPages,
+    pagArr
   };
 };

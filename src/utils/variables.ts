@@ -1,1 +1,1 @@
-export var baseUrl = "http://localhost:8092/api";
+export var baseUrl = "http://localhost:8095/api";

@@ -116,7 +116,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               value={formData.title}
               onChange={handleChange}
               required
-              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border text-black rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -130,7 +130,7 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               value={formData.description}
               onChange={handleChange}
               rows={3}
-              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border text-black rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -145,26 +145,44 @@ const AddTaskModal: React.FC<AddTaskModalProps> = ({
               value={formatForInput(formData.scheduled_for)}
               onChange={handleChange}
               required
-              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full border text-black rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
           {/* Priority */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block  text-sm font-medium text-gray-700">
               Priority
             </label>
             <select
               name="priority"
               value={formData.priority}
               onChange={handleChange}
-              className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full text-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="Low">Low</option>
               <option value="Medium">Medium</option>
               <option value="High">High</option>
             </select>
           </div>
+
+
+<label className="block  text-sm font-medium text-gray-700">
+              Status
+            </label>
+            <select
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="w-full text-black border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="Not Started">Not Started</option>
+              <option value="In Progress">In progress</option>
+              <option value="Completed">completed</option>
+            </select>
+
+
+
 
           {/* Image Upload */}
           <div>

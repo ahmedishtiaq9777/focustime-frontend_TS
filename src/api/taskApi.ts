@@ -3,6 +3,7 @@ import axiosClient from "./axiosclient";
 import type {
   TaskAttributes as Task,
   DashboardDataResponse as DashboardData,
+  PaginatedTasksResponse
 } from "focustime_types";
 
 /**
@@ -10,9 +11,12 @@ import type {
  */
 export const fetchTasks = async (
   page = 1,
-  limit = 10
-): Promise<{ tasks: Task[] }> => {
+  limit = 5
+): Promise<PaginatedTasksResponse> => {
+  console.log("insidefetch:page",page);
+  console.log("inside:limit",limit);
   const res = await axiosClient.get(`/tasks?page=${page}&limit=${limit}`);
+  console.log("response:",res.data);
   return res.data;
 };
 

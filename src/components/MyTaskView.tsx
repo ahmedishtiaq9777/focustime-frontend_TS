@@ -6,9 +6,9 @@ import type { TaskAttributes as Task } from "focustime_types";
 import type { TaskInput } from "../types";
 
 const MyTaskView = () => {
-  const { tasks, loading, createTask, editTask, removeTask, loadTasks } =
+  const { tasks, loading, createTask, editTask, removeTask, loadTasks ,pagArr,nPages} =
     useTasks();
-
+const [cpage,setcpage]=useState<number>(1);;
   const [taskModalVisible, setTaskModalVisible] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState<Task | null>(null);
 
@@ -43,9 +43,18 @@ const MyTaskView = () => {
   };
 
   useEffect(() => {
-    loadTasks(1, 10);
-  }, []);
+    loadTasks(cpage, 5);
+  }, [cpage]);
 
+
+
+
+
+  const handleChangepage = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const value = Number(e.target.value);
+  setcpage(value);
+  console.log("Selected value:", value);
+};
   const handleDelete = async (id: number) => {
     if (confirm("Are you sure you want to delete this task?")) {
       await removeTask(id);
@@ -79,8 +88,24 @@ const MyTaskView = () => {
         </button>
       </div>
 
-      {/* Tasks Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Tasks Grid */}            
+
+      <p className="text-gray-400 text-sm mr-3">
+            {tasks?.filter((t) => t.is_completed).length} of {tasks?.length}
+            completed
+          </p>
+          <select
+          value={cpage}
+            onChange={handleChangepage}
+            className="bg-[#0f172a] text-white border border-gray-600 rounded px-3 py-2 mb-1"
+          >
+            {pagArr?.map((pagnum, index) => (
+              <option value={pagnum} key={index}>
+                {pagnum} of {nPages}
+              </option>
+            ))}
+          </select>
+      <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {tasks.length > 0 ? (
           tasks.map((task) => (
             <TaskCard
